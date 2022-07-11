@@ -32,6 +32,4 @@ function reset(){
 }
 
 function winCon(){
-
-
 }

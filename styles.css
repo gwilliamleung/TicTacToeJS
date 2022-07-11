@@ -17,11 +17,11 @@ body{
 }
 
 #cell1,#cell2,#cell3,#cell4,#cell5,#cell6{
-    border-bottom: 4px solid yellow;
+    border-bottom: 4px solid grey;
 }
 
 #cell1,#cell2,#cell4,#cell5,#cell7,#cell8{
-    border-right: 4px solid yellow;
+    border-right: 4px solid grey;
 }
 
 .cell{
