@@ -55,6 +55,17 @@ function reset(){
 
 
 function winCon(turn){
-
+    for (let i = 0; i <= 7; i++) {
+        const winCondition = winArray[i];
+        const a = boardArr[winCondition[0]];
+        const b = boardArr[winCondition[1]];
+        const c = boardArr[winCondition[2]];
+        if (a === '' || b === '' || c === '') {
+            continue;
+        }
+        if (a === b && b === c) {
+            alert("winner!");
+            break;
+        }
 }
-
+}
