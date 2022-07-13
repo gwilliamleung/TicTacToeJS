@@ -1,6 +1,8 @@
 let board = Array.from(document.getElementsByClassName('cell'));
 let turn = "X";
 let boardArr = [];
+let gameStatus = false;
+const turnMessage = document.getElementById("turn");
 const winArray = [
 	[0, 1, 2],
 	[3, 4, 5],
@@ -12,37 +14,45 @@ const winArray = [
 	[2, 4, 6]
 ]
 
+
 function game(){
-    board.map( cells => {
-        cells.addEventListener('click', (e) => {
-            switch(turn){
-                case "X":
-                    if (e.target.innerHTML == ""){
-                        document.getElementById(e.target.id).innerHTML = "X";
-                        for (var i=0; i<board.length; i++){
-                            boardArr.push(board[i].innerHTML);
+    gameStatus = true;
+        turnMessage.innerHTML = "X starts, please click on a square below";
+        board.map( cells => {
+            cells.addEventListener('click', (e) => {
+                switch(turn){
+                    case "X":
+                        if (gameStatus === true) {
+                            if (e.target.innerHTML == ""){
+                                document.getElementById(e.target.id).innerHTML = "X";
+                                for (var i=0; i<board.length; i++){
+                                    boardArr.push(board[i].innerHTML);
+                                }
+                                turnMessage.innerHTML = "O's turn, please click on a free square below";
+                                winCon(turn);
+                                turn = "O";
+                                boardArr = [];
+                                break;
+                            }
                         }
-                        winCon(turn);
-                        turn = "O";
-                        console.log(boardArr)
-                        boardArr = [];
-                        break;
-                    }
-                case "O":
-                    if (e.target.innerHTML == ""){
-                        document.getElementById(e.target.id).innerHTML = "O";
-                        for (var i=0; i<board.length; i++){
-                            boardArr.push(board[i].innerHTML);
+                    case "O":
+                        if (gameStatus === true){
+                            if (e.target.innerHTML == ""){
+                                document.getElementById(e.target.id).innerHTML = "O";
+                                for (var i=0; i<board.length; i++){
+                                    boardArr.push(board[i].innerHTML);
+                                }
+                                turnMessage.innerHTML = "X's turn, please click on a free square below";
+                                winCon(turn);
+                                turn = "X";
+                                boardArr = [];
+                                break;
+                            }
                         }
-                        winCon(turn);
-                        turn = "X";
-                        console.log(boardArr)
-                        boardArr = [];
-                        break;
-                    }
-            }       
+                }       
             });
-        });
+        }
+    );
 }
 
 function reset(){
@@ -50,8 +60,9 @@ function reset(){
         cells.innerHTML = "";
         });
     turn = "X";
+    turnMessage.innerHTML = "X starts, please click on a square below";
+    gameStatus = false;
 }
-
 
 
 function winCon(turn){
@@ -64,8 +75,14 @@ function winCon(turn){
             continue;
         }
         if (a === b && b === c) {
-            alert("winner!");
+            turnMessage.innerHTML = `${turn} wins!`;
+            gameStatus = false;
             break;
         }
-}
+    }
+    if (!boardArr.includes('')) {
+        turnMessage.innerHTML = "It is a draw!";
+        gameStatus = false;
+    }
+    
 }
