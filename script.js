@@ -80,7 +80,6 @@ function gameBot(){
                     case "O":
                         if (gameStatus === true){
                             let botMove = Math.floor(Math.random() * board.length);
-                            for (let ii = 0; ii <= 9; ii++){
                                 if (board[botMove].innerHTML == ""){
                                     document.getElementById(board[botMove].id).innerHTML = "O";
                                     for (var i=0; i<board.length; i++){
@@ -93,7 +92,7 @@ function gameBot(){
                                     ii = 9;
                                     }
                             botMove = Math.floor(Math.random() * board.length);
-                            }
+
                         }
                 }       
             });
