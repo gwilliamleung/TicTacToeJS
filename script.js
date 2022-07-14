@@ -15,7 +15,8 @@ const winArray = [
 ]
 
 
-function game(){
+function gameSP(){
+    reset();
     gameStatus = true;
         turnMessage.innerHTML = "X starts, please click on a square below";
         board.map( cells => {
@@ -55,12 +56,58 @@ function game(){
     );
 }
 
+function gameBot(){
+    reset();
+    gameStatus = true;
+        turnMessage.innerHTML = "X starts, please click on a square below";
+        board.map( cells => {
+            cells.addEventListener('click', (e) => {
+                switch(turn){
+                    case "X":
+                        if (gameStatus === true) {
+                            if (e.target.innerHTML == ""){
+                                document.getElementById(e.target.id).innerHTML = "X";
+                                for (var i=0; i<board.length; i++){
+                                    boardArr.push(board[i].innerHTML);
+                                }
+                                turnMessage.innerHTML = "O's turn, please click on a free square below";
+                                winCon(turn);
+                                turn = "O";
+                                boardArr = [];
+                                break;
+                            }
+                        }
+                    case "O":
+                        if (gameStatus === true){
+                            let botMove = Math.floor(Math.random() * board.length);
+                            for (let ii = 0; ii <= 9; ii++){
+                                if (board[botMove].innerHTML == ""){
+                                    document.getElementById(board[botMove].id).innerHTML = "O";
+                                    for (var i=0; i<board.length; i++){
+                                        boardArr.push(board[i].innerHTML);
+                                    }
+                                    turnMessage.innerHTML = "X's turn, please click on a free square below";
+                                    winCon(turn);
+                                    turn = "X";
+                                    boardArr = [];
+                                    ii = 9;
+                                    }
+                            botMove = Math.floor(Math.random() * board.length);
+                            }
+                        }
+                }       
+            });
+        }
+    );
+}
+
 function reset(){
     board.map( cells => {
         cells.innerHTML = "";
         });
     turn = "X";
     turnMessage.innerHTML = "X starts, please click on a square below";
+    boardArr = [];
     gameStatus = false;
 }
 
@@ -79,10 +126,10 @@ function winCon(turn){
             gameStatus = false;
             break;
         }
-    }
-    if (!boardArr.includes('')) {
-        turnMessage.innerHTML = "It is a draw!";
-        gameStatus = false;
+        if (!boardArr.includes('')) {
+            turnMessage.innerHTML = "It is a draw!";
+            gameStatus = false;
+        }
     }
     
 }
